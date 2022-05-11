@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import Films from "./components/Films";
+import {QueryClient, QueryClientProvider} from "react-query";
+import {ReactQueryDevtools} from "react-query/devtools";
+import {useState} from 'react'
+
+
+// Create a client
+const queryClient = new QueryClient()
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [isOpen, setIsOpen] = useState(false);
+    return (
+        <QueryClientProvider client={queryClient}>
+            <div className="App">
+                <button onClick={() => setIsOpen(!isOpen)}>click</button>
+                {isOpen ?
+                 <>
+                 <Films queryKey={'films1'}/>
+                 {/*<Films queryKey={'films2'}/>*/}
+                 </>
+                        : null}
+            </div>
+            {/*девтулс панель управление React Query */}
+            <ReactQueryDevtools/>
+        </QueryClientProvider>
+    );
 }
 
 export default App;
