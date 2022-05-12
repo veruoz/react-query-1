@@ -19,7 +19,15 @@ const useGetFilms = () => {
 
 const Films = ({ queryKey }) => {
     const { data } = useGetFilms()
-    return (<ul>
+    return (
+        <>
+            <button onClick={()=>
+                // обновление кеша
+                queryClient.invalidateQueries('film', {
+                    refetchInactive: true,
+                })}
+            >Обновить все</button>
+            <ul>
                 {
                     // Array(30).fill(0).map(()=>
                     data?.map(film => (
@@ -28,11 +36,12 @@ const Films = ({ queryKey }) => {
                                 {film.title}
                             </Link>
                         </li>
-                    // )
+                        // )
                     ))
                 }
             </ul>
-           )
+        </>
+    )
 };
 
 export default Films;
